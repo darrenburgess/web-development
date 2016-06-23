@@ -10,6 +10,13 @@ def parse_params(request)
   Hash[ array.map! { |param| param.split("=") } ]
 end
 
+def roll_dice(client, rolls, sides)
+  rolls.to_i.times do |roll|
+    roll += 1
+    client.puts "roll #{roll}: #{rand(sides.to_i) + 1} on #{sides} sided die"
+  end
+end
+
 loop do
   client = server.accept
   request_line = client.gets
@@ -23,9 +30,6 @@ loop do
   client.puts http_method
   client.puts path
   client.puts params
-  client.puts rand(6) + 1
+  roll_dice(client, params["rolls"], params["sides"])
   client.close
 end
-
-# GET /?rolls=2&sides=6 HTTP/1.1
-
