@@ -11,8 +11,7 @@
 
   <h1><%= @title %></h1>
   <% @files.each do |file| %> 
-    <% path = "public/#{file.delete("^0-9").to_i}"%>
-    <p><a href="<%=path%>"><%= file %></a></p>
+    <p><a href="<%=file%>"><%= file %></a></p>
   <% end %>
 
 </body>
