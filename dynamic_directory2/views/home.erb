@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= @title %></title>
+</head>
+
+<body>
+  <h1><%= @title %></h1>
+  <% @files.each do |file| %>
+    <p><a href="file?file=public/<%=file%>"><%= file %></a></p>
+  <% end %>
+
+  <a href="?sort=ascending">Sort Ascending</a>
+  <a href="?sort=descending">Sort Descending</a>
+</body>
+</html>
