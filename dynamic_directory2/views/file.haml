@@ -1,16 +1,9 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= @title %></title>
-</head>
-
-<body>
-  <h1><%= @file_name %></h1>
-
-  <p><%= @content %></p>
-
-  <a href="../">Home</a>
-</body>
-</html>
+!!!
+%html
+  %head
+    %meta charset="utf-8"
+    %title= @title
+  %body
+    %h1= @file_name
+    %p= @content
+    %a(href="../") Home
