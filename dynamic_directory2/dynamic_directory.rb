@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'tilt/erubis'
+require 'tilt/haml'
 require 'pry'
 
 get '/' do
@@ -18,5 +19,5 @@ end
 get "/file" do
   @file_name = @params["file"]
   @content = File.read(@file_name)
-  erb :file
+  haml :file
 end
