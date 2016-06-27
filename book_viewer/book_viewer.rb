@@ -27,29 +27,34 @@ get "/chapters/:number" do
   erb :chapter
 end
 
-def return_files(query)
+def matching_files
   files = Dir.entries("data/").select { |file| !!(file =~ /^chp/) }
   result = files.select do |file|
     content = File.read("data/#{file}")
-    content.include? query if query
+    content.include? @query if @query
   end
   result
 end
 
-def return_paragraphs
-  # initialize result hash
-  # iterate array of found files
-  # construct array of paragraphs for current file
-  # initialize para array
-  # iterate array of paragraphs
-  # push paragraph to result array if match to query string
-  # push array of matching paragraphs and title to result hash
-  # return result hash
+def matching_paragraphs
+  result = {}
+
+  matching_files.each do |file|
+    paragraphs_result = []
+    number = file.delete("^0-9")
+    paragraphs = File.read("data/chp#{number}.txt").split("\n\n")
+    paragraphs.select do |paragraph|
+      paragraphs_result << paragraph if paragraph.include? @query
+    end
+    result[file] = paragraphs_result unless paragraphs_result.empty?
+  end
+
+  result
 end
 
 get "/search" do
-  @query = params["query"] unless params["query"].empty? 
-  @file_results = return_files(@query)
+  @query = params["query"] unless params["query"].nil?
+  @file_results = matching_paragraphs
   erb :search
 end
 
