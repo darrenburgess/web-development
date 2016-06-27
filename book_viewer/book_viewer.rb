@@ -9,7 +9,7 @@ end
 
 helpers do
   def in_paragraphs(text)
-    text.split("\n\n").map { |line| "<p>#{line}</p>"}.join
+    text.split("\n\n").each_with_index.map { |line, index| "<p id='#{index}'>#{line}</p>"}.join
   end
 end
 
