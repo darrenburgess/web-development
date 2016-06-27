@@ -10,11 +10,12 @@
   <h3>Results for '<%= @query %>'</h3>
   <% @file_results.each do |file, paragraphs| %>
     <% num = file.delete("^0-9") %>
+    <% file = file_title(file) %>
     <ul>
-      <li><a href="chapters/<%= num %>"><%= file %></a></li>
+      <li><%= file %></li>
       <ul>
-        <% paragraphs.each do |paragraph| %>
-          <li><%= paragraph %></li>
+        <% paragraphs.each do |id, paragraph| %>
+          <li><a href="chapters/<%= num %>#<%= id %>"><%= paragraph %></a></li>
         <% end %>
       </ul>
     </ul>

@@ -27,31 +27,6 @@ get "/chapters/:number" do
   erb :chapter
 end
 
-def matching_files
-  files = Dir.entries("data/").select { |file| !!(file =~ /^chp/) }
-  result = files.select do |file|
-    content = File.read("data/#{file}")
-    content.include? @query if @query
-  end
-  result
-end
-
-def matching_paragraphs
-  result = {}
-
-  matching_files.each do |file|
-    paragraphs_result = []
-    number = file.delete("^0-9")
-    paragraphs = File.read("data/chp#{number}.txt").split("\n\n")
-    paragraphs.select do |paragraph|
-      paragraphs_result << paragraph if paragraph.include? @query
-    end
-    result[file] = paragraphs_result unless paragraphs_result.empty?
-  end
-
-  result
-end
-
 get "/search" do
   @query = params["query"] unless params["query"].nil?
   @file_results = matching_paragraphs
@@ -60,4 +35,38 @@ end
 
 not_found do
   redirect "/"
+end
+
+def file_title(file_name)
+  index = (file_name.delete("^0-9").to_i) - 1
+  @contents[index]
+end
+
+def matching_paragraphs
+  result = {}
+
+  matching_files.each do |file|
+    paragraphs_result = {}
+    number = file.delete("^0-9")
+    paragraphs = File.read("data/#{file}").split("\n\n")
+
+    paragraphs.select.with_index do |paragraph, index|
+      paragraphs_result[index] = paragraph if paragraph.include? @query
+    end
+
+    result[file] = paragraphs_result unless paragraphs_result.empty?
+  end
+
+  result
+end
+
+def matching_files
+  files = Dir.entries("data/").select { |file| file.include? 'chp' }  
+
+  result = files.select do |file|
+    content = File.read("data/#{file}")
+    content.include? @query if @query
+  end
+  
+  result
 end
