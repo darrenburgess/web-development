@@ -11,6 +11,10 @@ helpers do
   def in_paragraphs(text)
     text.split("\n\n").each_with_index.map { |line, index| "<p id='#{index}'>#{line}</p>"}.join
   end
+
+  def highlight(text, query)
+    text.gsub query, "<strong>#{query}</strong>"
+  end
 end
 
 get "/" do
@@ -51,7 +55,7 @@ def matching_paragraphs
     paragraphs = File.read("data/#{file}").split("\n\n")
 
     paragraphs.select.with_index do |paragraph, index|
-      paragraphs_result[index] = paragraph if paragraph.include? @query
+      paragraphs_result[index] = highlight(paragraph, @query) if paragraph.include? @query
     end
 
     result[file] = paragraphs_result unless paragraphs_result.empty?
