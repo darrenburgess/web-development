@@ -34,7 +34,6 @@ get "/search" do
     content = File.read("data/#{file}")
     content.include? @query if @query
   end
-  @files = nil if @files == []
   erb :search
 end
 
