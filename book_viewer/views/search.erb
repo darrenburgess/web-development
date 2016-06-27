@@ -4,11 +4,11 @@
   <button type="submit">Search</button>
 </form>
 
-<% if @files.empty? %>
+<% if @file_results.empty? %>
   <h3>Sorry, no matches were found</h3>
 <% else %>
   <h3>Results for '<%= @query %>'</h3>
-  <% @files.each do |file| %>
+  <% @file_results.each do |file| %>
     <% num = file.delete("^0-9") %>
     <p><a href="chapters/<%= num %>"><%= file %></a></p>
   <% end %>
