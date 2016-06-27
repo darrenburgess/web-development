@@ -1,0 +1,16 @@
+<h2 class="content-subhead">Search</h2>
+<form action="/search" mechod="get">
+  <input name="query" value="<%= params[:query] %>">
+  <button type="submit">Search</button>
+</form>
+
+<h2>
+  <% if @files %>
+    <h2>Results for '<%= @query %>'
+    <% @files.each do |file| %>
+      <p><%= file %></p>
+    <% end %>
+  <% else %>
+    <h2>Sorry, no matches were found</h2>
+  <% end %>
+                      
