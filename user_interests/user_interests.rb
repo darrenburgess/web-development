@@ -4,10 +4,14 @@ require 'tilt/erubis'
 require 'yaml'
 require 'pry'
 
+before do
+  @users = YAML.load_file "users.yaml"
+end
+
+not_found do
+  redirect '/'
+end
+
 get '/' do
-  users = begin
-            YAML.load(File.open("/users.yml"))
-          rescue ArgumentError => e
-            puts "could not parse YAML: #{e.message}"
-          end
+  "#{@users}"
 end
