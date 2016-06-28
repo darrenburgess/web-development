@@ -4,10 +4,20 @@
     <meta charset="utf-8">
     <title><%= @title %></title>
 </head>
-<body>
+  <body>
 
-  <%= yield %>
+    <%= yield %>
 
-</body>
+    <% if @other_users %>
+      <h2>Other Users:</h2>
+      <% @other_users.each do |name, _| %>
+        <a href="<%= name %>"><%= name %></a>
+      <% end %>
+    <% end %>
+
+    <h2>Counts:</h2>
+    <p>Users: <%= @user_count %></p>
+    <p>Interests: <%= count_interests %></p>
+  </body>
 </html>
 
