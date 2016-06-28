@@ -12,6 +12,10 @@ not_found do
   redirect '/'
 end
 
-get '/' do
-  "#{@users}"
+get "/" do
+  redirect "/users"
+end
+
+get "/users" do
+  erb :users
 end
