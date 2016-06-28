@@ -19,3 +19,9 @@ end
 get "/users" do
   erb :users
 end
+
+get "/user/:name" do
+  @name = params["name"].to_sym
+  @user = @users.select { |key, _| key == @name }
+  erb :user
+end
